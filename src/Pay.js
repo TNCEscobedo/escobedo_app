@@ -5,6 +5,8 @@ import Button from './Button';
 import Header from "./Header";
 import axios from "axios";
 import BASE_URL from "./BASE_URL";
+import LottieView from 'lottie-react-native';
+
 class Pay extends React.Component {
     constructor(props) {
         super(props);
@@ -16,12 +18,13 @@ class Pay extends React.Component {
             folio: "",
             notas: "",
             noPagado: false,
-            notas: false
+            notas: false,
+            playing: false
         }
     }
 
     componentDidMount() {
-        this.setState({ selected: "id" })
+        this.setState({ selected: "id" });
     }
 
     submit() {
@@ -57,8 +60,12 @@ class Pay extends React.Component {
                 noPagado: false,
                 notas: false,
                 id: "",
-                nombre: ""
+                nombre: "",
+                playing: true
             });
+            setTimeout(() => {
+                this.setState({playing: false});
+            }, 1300);
         })
     }
 
@@ -73,9 +80,15 @@ class Pay extends React.Component {
         }
     };
     render() {
+        const lottie = <LottieView
+                        autoPlay
+                        speed={2}
+                        style={{zIndex: 1000}}
+                        source={require('../assets/saved.json')}
+                    />;
         return (
             <View style={{ flex: 1, alignItems: "center" }}>
-                
+                {this.state.playing ? lottie : null}
                 <View style={{ flexDirection: "row", justifyContent: "space-around", width: "90%", marginTop: 30 }}>
                     <Text onPress={() => this.setState({ selected: "id" })} style={{ backgroundColor: this.state.selected === "id" ? "#d3d3d3" : "white", flex: 1, textAlign: "center", borderTopRightRadius: 20, borderTopLeftRadius: 20, fontSize: 20, paddingVertical: 10 }}>
                         ID
