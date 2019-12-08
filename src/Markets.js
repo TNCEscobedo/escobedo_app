@@ -1,20 +1,40 @@
 import React from 'react';
-import { View, Text, TextInput, ScrollView } from 'react-native';
+import { View, Text, TextInput, ScrollView, ActivityIndicator, TouchableNativeFeedback } from 'react-native';
 import Header from "./Header";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import MarketCard from './MarketCard';
-
+import axios from 'axios';
+import BASE_URL from "./BASE_URL";
 class Markets extends React.Component{
     static navigationOptions = {
         header: () => <Header
                          text="Mi app"
-                         left="arrow-back"
+                         onLeftPressed={() => console.log(this.props)}
                     />,
         headerStyle: {
             height: 100
         }
     };
+    constructor(props) {
+        super(props);
+        this.state = {
+            markets: []
+        }
+    }
+    componentDidMount(){
+        console.log("didmount");
+        axios.get(BASE_URL+"mercados/?fecha=2019-12-08").then((res) => {
+            console.log(res.data);
+            this.setState({markets: res.data});
+        }).catch((e) => {
+            console.log(e.errorMessage);
+        })
+    }
     render(){
+        if(!this.state.markets){
+            return <ActivityIndicator size="large" animating={true}/>
+        }
+        console.log("props", this.props.navigation.state.params.keys);
         return(
             <View style={{flex: 1}}>
                 <View style={styles.searchField}>
@@ -27,16 +47,15 @@ class Markets extends React.Component{
                     />
                 </View>
                 <ScrollView style={styles.scroll}>
-                    <MarketCard icon="add-circle"/>
-                    <MarketCard/>
-                    <MarketCard/>
-                    <MarketCard/>
-                    <MarketCard/>
-                    <MarketCard/>
-                    <MarketCard/>
-                    <MarketCard/>
-                    <MarketCard/>
-                    <MarketCard/>
+                    <View style={{flex: 1, padding: 30}}>
+                        {this.state.markets.map((obj) => {
+                            return (
+                                <TouchableNativeFeedback>
+                                    <MarketCard saved={this.props.navigation.state.params.keys.includes(obj.idMercado.toString())} key={obj.idMercado} market={obj} icon="add-circle"/>
+                                </TouchableNativeFeedback>
+                            )
+                        })}
+                    </View>
                 </ScrollView>
             </View>
         )
@@ -69,8 +88,7 @@ const styles = {
     },
     scroll: {
         flex: 1,
-        width: "100%",
-        padding: 30
+        width: "100%"
     }
 }
 

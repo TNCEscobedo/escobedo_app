@@ -14,7 +14,11 @@ class Debts extends React.Component{
             height: 100
         }
     };
+    componentDidMount(){
+
+    }
     render(){
+        const puestos = this.props.navigation.state.params.market.puestos;
         return(
             <View style={styles.root}>
                 <ScrollView style={styles.scroll}>
@@ -24,24 +28,12 @@ class Debts extends React.Component{
                         </Text>
                     </View>
                     <View style={{flex: 1, paddingHorizontal: 30}}>
-                        <DebtsRow />
-                        <DebtsRow />
-                        <DebtsRow />
-                        <DebtsRow />
-                        <DebtsRow />
-                        <DebtsRow />
-                        <DebtsRow />
-                        <DebtsRow />
-                        <DebtsRow />
-                        <DebtsRow />
-                        <DebtsRow />
-                        <DebtsRow />
-                        <DebtsRow />
-                        <DebtsRow />
-                        <DebtsRow />
+                        {puestos.map((obj) => {
+                            return obj.saldo < 0 ? <DebtsRow key={obj.idPuesto} debt={obj}/> : null;
+                        })}
                     </View>
                 </ScrollView>
-                <Button title="Iniciar"></Button>
+                <Button onPress={() => this.props.navigation.navigate("Pay")} title="Iniciar"></Button>
             </View>
         )
     }

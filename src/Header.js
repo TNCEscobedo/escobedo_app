@@ -1,11 +1,11 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, Image } from "react-native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 class Header extends React.Component {
     
     render() {
-        let right = <Text style={styles.right}>Jue</Text>;
+        let right = <Text style={[styles.right]}>Dom</Text>;
         if(this.props.right){
             right =  (
                     <MaterialIcons
@@ -15,14 +15,23 @@ class Header extends React.Component {
                     />
             )
         }
+        if(this.props.rightEmpty)
+        right =  (
+            <MaterialIcons
+                name={this.props.right}
+                size={30}
+                color={"rgba(52, 52, 52, 0)"}
+            />
+        )
         return (
             <View style={styles.root}>
                 <MaterialIcons
                     name={this.props.left}
                     size={30}
                     color={"white"}
+                    onPress={this.props.onLeftPressed}
                 />
-                <Text style={styles.center}>{this.props.text}</Text>
+                <Image source={require('../assets/escudo.png')} style={{width: 60, height: 60}}/>
                 {right}
             </View>
         );
@@ -48,7 +57,8 @@ const styles = {
     },
     right: {
         fontFamily: "OpenSans-Bold",
-        color: "white"
+        color: "white", 
+        fontSize: 16
     }
 }
 
