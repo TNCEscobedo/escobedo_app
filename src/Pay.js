@@ -65,7 +65,7 @@ class Pay extends React.Component {
             });
             setTimeout(() => {
                 this.setState({playing: false});
-            }, 1300);
+            }, 1800);
         })
     }
 
@@ -80,12 +80,16 @@ class Pay extends React.Component {
         }
     };
     render() {
+        const puestos = this.props.navigation.state.params.puestos;
+        console.log("puestos", puestos);
+        console.log("monto", this.state.monto);
         const lottie = <LottieView
                         autoPlay
                         speed={2}
                         style={{zIndex: 1000}}
                         source={require('../assets/saved.json')}
                     />;
+        const tarifas = [35,40,50,60,0]
         return (
             <View style={{ flex: 1, alignItems: "center" }}>
                 {this.state.playing ? lottie : null}
@@ -103,7 +107,21 @@ class Pay extends React.Component {
                         keyboardType={this.state.selected === "id" ? "number-pad" : "default"}
                         value={this.state[this.state.selected]}
                         placeholder={`${this.state.selected === "id" ? "Número" : "Nombre"} de comerciante`}
-                        onChangeText={txt => this.setState({ [this.state.selected]: txt })}
+                        onChangeText={txt => {
+                            this.setState({ [this.state.selected]: txt });
+                            puestos.forEach(puesto => {
+                                if(puesto.idPuesto === Number(txt)){
+                                    console.log("here");
+                                    this.setState({
+                                        tarifa: puesto.tarifa,
+                                        monto: puesto.tarifa,
+                                        saldo: puesto.saldo,
+                                        tarifa: tarifas[puesto.idTarifa]
+                                    });
+                                    console.log(this.state);
+                                }
+                            });
+                        }}
                     />
                 </View>
                 <View style={styles.row}>
@@ -111,7 +129,7 @@ class Pay extends React.Component {
                         <Text style={{ textAlign: "left" }}>Saldo</Text>
                     </View>
                     <View style={{ flexDirection: "column", width: "50%" }}>
-                        <Text style={{ textAlign: "right" }}>$0.00</Text>
+                        <Text style={{ textAlign: "right", color: this.state.saldo < 0 ? "red" : "green" }}>${this.state.saldo}</Text>
                     </View>
                 </View>
                 <View style={styles.row}>
@@ -119,7 +137,7 @@ class Pay extends React.Component {
                         <Text style={{ textAlign: "left" }}>Tarifa</Text>
                     </View>
                     <View style={{ flexDirection: "column", width: "50%" }}>
-                        <Text style={{ textAlign: "right" }}>$0.00</Text>
+                        <Text style={{ textAlign: "right" }}>${this.state.tarifa}</Text>
                     </View>
                 </View>
                 <RadioButtons setPrice={(tarifa) => this.setState({tarifa})}/>

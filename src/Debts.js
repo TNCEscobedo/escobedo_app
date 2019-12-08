@@ -33,7 +33,9 @@ class Debts extends React.Component{
                         })}
                     </View>
                 </ScrollView>
-                <Button onPress={() => this.props.navigation.navigate("Pay")} title="Iniciar"></Button>
+                <Button onPress={() => this.props.navigation.navigate("Pay", {
+                    puestos
+                })} title="Iniciar"></Button>
             </View>
         )
     }

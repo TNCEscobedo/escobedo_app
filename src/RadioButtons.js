@@ -14,10 +14,10 @@ class RadioButtons extends React.Component {
     }
     render() {
         var radio_props = [
-            {label: '3m', value: "3" },
-            {label: '6m', value: "6" },
-            {label: '9m', value: "9" },
-            {label: '12m', value: "12" },
+            {label: '3m', value: "30" },
+            {label: '6m', value: "40" },
+            {label: '9m', value: "50" },
+            {label: '12m', value: "60" },
             {label: 'Otro', value: "Otro" },
           ];
           
