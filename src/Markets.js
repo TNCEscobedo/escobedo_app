@@ -27,17 +27,17 @@ class Markets extends React.Component{
                     />
                 </View>
                 <ScrollView style={styles.scroll}>
-                <MarketCard icon="add-circle"/>
-                <MarketCard/>
-                <MarketCard/>
-                <MarketCard/>
-                <MarketCard/>
-                <MarketCard/>
-                <MarketCard/>
-                <MarketCard/>
-                <MarketCard/>
-                <MarketCard/>
-            </ScrollView>
+                    <MarketCard icon="add-circle"/>
+                    <MarketCard/>
+                    <MarketCard/>
+                    <MarketCard/>
+                    <MarketCard/>
+                    <MarketCard/>
+                    <MarketCard/>
+                    <MarketCard/>
+                    <MarketCard/>
+                    <MarketCard/>
+                </ScrollView>
             </View>
         )
     }

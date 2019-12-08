@@ -3,7 +3,18 @@ import { View, Text } from "react-native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 class Header extends React.Component {
+    
     render() {
+        let right = <Text style={styles.right}>Jue</Text>;
+        if(this.props.right){
+            right =  (
+                    <MaterialIcons
+                        name={this.props.right}
+                        size={30}
+                        color={"white"}
+                    />
+            )
+        }
         return (
             <View style={styles.root}>
                 <MaterialIcons
@@ -12,7 +23,7 @@ class Header extends React.Component {
                     color={"white"}
                 />
                 <Text style={styles.center}>{this.props.text}</Text>
-                <Text style={styles.right}>Jue</Text>
+                {right}
             </View>
         );
     }
